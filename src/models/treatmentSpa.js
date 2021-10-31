@@ -7,7 +7,8 @@ const treatmentSpa = new Schema({
     category: { type: String },
     imageURL: { type: String },
     public_id: { type: String },
-    filename: { type: String }
+    filename: { type: String },
+    created_at: { type: Date, default: Date.now() }
 })
 
 module.exports = model('Spa', treatmentSpa);
