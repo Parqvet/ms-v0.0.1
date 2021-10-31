@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const morgan = require('morgan');
 const swaggerUi = require('swagger-ui-express');
 
@@ -12,15 +13,23 @@ class ExpressServer {
         this.port = config.port;
         this.basePath = `${config.api.prefix}`
 
+        this._settings();
+
         this._middlewares();
 
         this._swaggerConfig();
 
         this._routes();
 
-        this._notFound();
+        //this._notFound();
         this._errorHandler();
 
+    }
+
+    // view engine setup
+    _settings() {
+        this.app.set('views', path.join(__dirname, '../../views'));
+        this.app.set('view engine', 'ejs');
     }
 
     _middlewares() {
@@ -34,7 +43,7 @@ class ExpressServer {
             res.status(200).end();
         });
 
-        this.app.use(this.basePathUser, require('../../routes/users'));
+        this.app.use(require('../../routes/index'));
     }
 
     _notFound() {
